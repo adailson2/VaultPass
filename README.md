@@ -1,97 +1,116 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🔐 VaultPass — Secure React Native Wallet Demo (TypeScript)
 
-# Getting Started
+VaultPass is a **React Native CLI** demo app that showcases **mobile security best practices**
+for Web3 and fintech use cases — similar to what you'd find in a **non-custodial crypto wallet**.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+The app focuses on:
 
-## Step 1: Start Metro
+- **Hardware-backed key storage**
+- **Biometric authentication**
+- **Bundle & runtime protection**
+- **OWASP Mobile Top 10 compliance**
+- **Mocked blockchain data via MSW or interceptors**
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+---
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## 🧱 Tech Stack
 
-```sh
-# Using npm
-npm start
+| Layer               | Tools                                                                       |
+| ------------------- | --------------------------------------------------------------------------- |
+| **Language**        | TypeScript                                                                  |
+| **Framework**       | React Native 0.73 (React Navigation, Zustand, React Query)                  |
+| **Security**        | `react-native-keychain`, biometrics, Android R8 + ProGuard, Hermes + Terser |
+| **Mock APIs**       | Axios + Mock Service Worker (or simple interceptors)                        |
+| **Native Security** | iOS Keychain / Android Keystore (TEE / StrongBox)                           |
+| **Testing**         | Jest (unit), Detox (E2E)                                                    |
 
-# OR using Yarn
-yarn start
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** >= 20 (check with `node --version`)
+- **npm** or **yarn** package manager
+- For **iOS**: macOS with Xcode (latest version recommended)
+- For **Android**: Android Studio with Android SDK configured
+- **Java Development Kit (JDK)** for Android development
+
+### 1. Clone & install
+
+```bash
+git clone https://github.com/adailson2/VaultPass.git
+cd vaultpass
+npm install
 ```
 
-## Step 2: Build and run your app
+### 2. iOS Setup
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+Install CocoaPods dependencies:
 
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+cd ios
+pod install
+cd ..
 ```
 
-### iOS
+### 3. Running the App
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+#### Run on iOS Simulator
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+Or specify a specific simulator:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```bash
+npx react-native run-ios --simulator="iPhone 15"
+```
 
-## Step 3: Modify your app
+#### Run on Android Emulator
 
-Now that you have successfully run the app, let's make changes!
+Make sure you have:
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+- An Android emulator running, or
+- A physical Android device connected with USB debugging enabled
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+Then run:
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+```bash
+npm run android
+```
 
-## Congratulations! :tada:
+#### Start Metro Bundler
 
-You've successfully run and modified your React Native App. :partying_face:
+In a separate terminal, you can start the Metro bundler:
 
-### Now what?
+```bash
+npm start
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+This will start the Metro bundler which serves the JavaScript bundle to your app.
 
-# Troubleshooting
+### 4. Troubleshooting
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- **iOS**: If you encounter build issues, try cleaning the build:
 
-# Learn More
+  ```bash
+  cd ios
+  xcodebuild clean
+  pod deintegrate && pod install
+  cd ..
+  ```
 
-To learn more about React Native, take a look at the following resources:
+- **Android**: Clean and rebuild:
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+  ```bash
+  cd android
+  ./gradlew clean
+  cd ..
+  ```
+
+- **Metro Cache**: Clear Metro bundler cache:
+  ```bash
+  npm start -- --reset-cache
+  ```
