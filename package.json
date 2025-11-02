@@ -18,6 +18,7 @@
     "@tanstack/react-query": "^5.90.6",
     "axios": "^1.13.1",
     "bip39": "^3.1.0",
+    "buffer": "^6.0.3",
     "jail-monkey": "^2.8.4",
     "noble-secp256k1": "^1.2.14",
     "react": "19.1.1",

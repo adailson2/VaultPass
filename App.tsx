@@ -8,11 +8,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'react-native-gesture-handler';
 import AppNavigator from './src/navigation/AppNavigator';
 
-// Initialize MSW in development
-if (__DEV__) {
-  require('./src/mocks/msw/server.native');
-}
-
 // Create React Query client
 const queryClient = new QueryClient({
   defaultOptions: {

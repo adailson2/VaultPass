@@ -5,6 +5,7 @@
  */
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import { API_BASE_URL, API_ENDPOINTS } from '../config/constants';
+import { setupMockInterceptors } from '../mocks/interceptors';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
@@ -15,7 +16,13 @@ const apiClient: AxiosInstance = axios.create({
   },
 });
 
+// Setup mock interceptors as fallback (handles edge cases)
+if (__DEV__) {
+  setupMockInterceptors();
+}
+
 // Request interceptor (for TLS pinning in production)
+// Note: Mock interceptors are set up globally, but we can add TLS pinning here
 apiClient.interceptors.request.use(
   config => {
     // In production, add TLS pinning verification here
@@ -27,7 +34,7 @@ apiClient.interceptors.request.use(
   },
 );
 
-// Response interceptor
+// Response interceptor (for TLS pinning error handling)
 apiClient.interceptors.response.use(
   response => response,
   (error: AxiosError) => {

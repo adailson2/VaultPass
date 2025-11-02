@@ -4,6 +4,7 @@
  */
 import * as bip39 from 'bip39';
 import { utils, getPublicKey, sign, verify } from '@noble/secp256k1';
+import { Buffer } from 'buffer';
 
 /**
  * Generate a new BIP-39 seed phrase (12 words = 128 bits entropy)
