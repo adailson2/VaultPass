@@ -31,7 +31,7 @@ The app focuses on:
 ### Prerequisites
 
 - **Node.js** >= 20 (check with `node --version`)
-- **npm** or **yarn** package manager
+- **Yarn** package manager (install with `npm install -g yarn`)
 - For **iOS**: macOS with Xcode (latest version recommended)
 - For **Android**: Android Studio with Android SDK configured
 - **Java Development Kit (JDK)** for Android development
@@ -41,7 +41,7 @@ The app focuses on:
 ```bash
 git clone https://github.com/adailson2/VaultPass.git
 cd vaultpass
-npm install
+yarn install
 ```
 
 ### 2. iOS Setup
@@ -59,13 +59,13 @@ cd ..
 #### Run on iOS Simulator
 
 ```bash
-npm run ios
+yarn ios
 ```
 
 Or specify a specific simulator:
 
 ```bash
-npx react-native run-ios --simulator="iPhone 15"
+yarn react-native run-ios --simulator="iPhone 15"
 ```
 
 #### Run on Android Emulator
@@ -78,7 +78,7 @@ Make sure you have:
 Then run:
 
 ```bash
-npm run android
+yarn android
 ```
 
 #### Start Metro Bundler
@@ -86,7 +86,7 @@ npm run android
 In a separate terminal, you can start the Metro bundler:
 
 ```bash
-npm start
+yarn start
 ```
 
 This will start the Metro bundler which serves the JavaScript bundle to your app.
@@ -112,5 +112,5 @@ This will start the Metro bundler which serves the JavaScript bundle to your app
 
 - **Metro Cache**: Clear Metro bundler cache:
   ```bash
-  npm start -- --reset-cache
+  yarn start --reset-cache
   ```
