@@ -13,6 +13,7 @@ import {
 import { getSecurityStatus } from '../../security/platform';
 import { performIntegrityChecks } from '../../security/integrity';
 import { getOWASPComplianceStatus } from '../../config/owasp';
+import { getTLSPinningStatus } from '../../security/tlsPinning';
 import { useSession } from '../../store/useSession';
 import { wipeWallet } from '../../security/keychain';
 import { useNavigation } from '@react-navigation/native';
@@ -26,6 +27,7 @@ function SettingsScreen() {
   const { lock } = useSession();
   const [securityStatus, setSecurityStatus] = useState<any>(null);
   const [integrityStatus, setIntegrityStatus] = useState<any>(null);
+  const [tlsStatus, setTlsStatus] = useState<any>(null);
 
   useEffect(() => {
     loadSecurityStatus();
@@ -34,8 +36,10 @@ function SettingsScreen() {
   const loadSecurityStatus = async () => {
     const platformStatus = await getSecurityStatus();
     const integrity = await performIntegrityChecks();
+    const tls = getTLSPinningStatus();
     setSecurityStatus(platformStatus);
     setIntegrityStatus(integrity);
+    setTlsStatus(tls);
   };
 
   const handleWipeWallet = () => {
@@ -111,7 +115,14 @@ function SettingsScreen() {
 
         <View style={styles.statusRow}>
           <Text style={styles.statusLabel}>TLS Pinning:</Text>
-          <Text style={[styles.statusValue, styles.statusOk]}>Enabled</Text>
+          <Text
+            style={[
+              styles.statusValue,
+              tlsStatus?.enabled ? styles.statusOk : styles.statusError,
+            ]}
+          >
+            {tlsStatus?.enabled ? 'Enabled' : 'Disabled'}
+          </Text>
         </View>
       </View>
 

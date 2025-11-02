@@ -7,7 +7,10 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "generate-bundle-hash": "node scripts/generate-bundle-hash.js",
+    "build:android": "cd android && ./gradlew assembleRelease && cd .. && yarn generate-bundle-hash",
+    "build:ios": "cd ios && xcodebuild -workspace VaultPass.xcworkspace -scheme VaultPass -configuration Release archive && cd .. && yarn generate-bundle-hash"
   },
   "dependencies": {
     "@noble/secp256k1": "^3.0.0",
@@ -23,6 +26,7 @@
     "noble-secp256k1": "^1.2.14",
     "react": "19.1.1",
     "react-native": "0.82.1",
+    "react-native-cert-pinner": "^0.4.1",
     "react-native-device-info": "^14.1.1",
     "react-native-gesture-handler": "^2.29.0",
     "react-native-keychain": "^10.0.0",
@@ -46,6 +50,7 @@
     "@types/react-test-renderer": "^19.1.0",
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
+    "metro-minify-terser": "^0.83.3",
     "msw": "^2.11.6",
     "prettier": "2.8.8",
     "react-test-renderer": "19.1.1",

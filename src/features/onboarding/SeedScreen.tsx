@@ -17,6 +17,7 @@ import { StackNavigationProp } from '@react-navigation/native-stack';
 import { OnboardingStackParamList } from '../../navigation/OnboardingNavigator';
 import { generateSeedPhrase } from '../../security/crypto';
 import { Platform } from 'react-native';
+import { enableScreenshotProtection, disableScreenshotProtection } from '../../security/flagsSecure';
 
 type SeedScreenNavigationProp = StackNavigationProp<
   OnboardingStackParamList,
@@ -33,8 +34,13 @@ function SeedScreen() {
     const newSeed = generateSeedPhrase();
     setSeedPhrase(newSeed);
 
-    // Enable FLAG_SECURE on Android (prevent screenshots)
-    // Note: This requires native module setup - placeholder for now
+    // Enable screenshot protection
+    enableScreenshotProtection();
+
+    // Disable when component unmounts
+    return () => {
+      disableScreenshotProtection();
+    };
   }, []);
 
   const handleContinue = () => {

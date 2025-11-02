@@ -101,10 +101,17 @@ export function signMessage(
 ): Uint8Array {
   try {
     const signature = sign(message, privateKey);
-    // Signature is already a Uint8Array from @noble/secp256k1
-    return typeof signature === 'object' && 'toCompactRawBytes' in signature
-      ? signature.toCompactRawBytes()
-      : (signature as Uint8Array);
+    // Signature from @noble/secp256k1 returns Signature object with toCompactRawBytes()
+    if (
+      typeof signature === 'object' &&
+      signature !== null &&
+      'toCompactRawBytes' in signature
+    ) {
+      return (
+        signature as { toCompactRawBytes: () => Uint8Array }
+      ).toCompactRawBytes();
+    }
+    return signature as Uint8Array;
   } catch (error) {
     console.error('Failed to sign message:', error);
     throw new Error('Failed to sign message');

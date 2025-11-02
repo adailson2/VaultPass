@@ -6,6 +6,7 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import { API_BASE_URL, API_ENDPOINTS } from '../config/constants';
 import { setupMockInterceptors } from '../mocks/interceptors';
+import { initializeTLSPinning } from '../security/tlsPinning';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
@@ -19,14 +20,18 @@ const apiClient: AxiosInstance = axios.create({
 // Setup mock interceptors as fallback (handles edge cases)
 if (__DEV__) {
   setupMockInterceptors();
+} else {
+  // Initialize TLS pinning in production
+  initializeTLSPinning();
 }
 
 // Request interceptor (for TLS pinning in production)
-// Note: Mock interceptors are set up globally, but we can add TLS pinning here
+// Note: react-native-cert-pinner handles pinning at native level
+// This interceptor can be used for additional validation
 apiClient.interceptors.request.use(
   config => {
-    // In production, add TLS pinning verification here
-    // This would use react-native-cert-pinner or similar
+    // TLS pinning is handled natively by react-native-cert-pinner
+    // Additional validation can be added here if needed
     return config;
   },
   (error: AxiosError) => {

@@ -3,11 +3,7 @@
  * Compares runtime bundle hash with build-time embedded hash
  */
 
-// This value should be embedded at build time
-// For now, we'll compute it at runtime in dev, and verify in production
-const BUILD_TIME_BUNDLE_HASH = __DEV__
-  ? null // In dev, we skip integrity check
-  : 'PLACEHOLDER_BUNDLE_HASH'; // This should be replaced at build time
+import { BUILD_TIME_BUNDLE_HASH } from '../config/bundle-hash';
 
 /**
  * Compute SHA-256 hash of a string

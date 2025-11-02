@@ -1,7 +1,7 @@
 /**
  * Seed phrase confirmation screen
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ import { initializeWalletFromSeed } from '../../security/crypto';
 import { useSession } from '../../store/useSession';
 import { useWallet } from '../../store/useWallet';
 import { RootStackParamList } from '../../navigation/AppNavigator';
+import { enableScreenshotProtection, disableScreenshotProtection } from '../../security/flagsSecure';
 
 type ConfirmSeedScreenNavigationProp = StackNavigationProp<
   RootStackParamList | OnboardingStackParamList,
@@ -36,6 +37,14 @@ function ConfirmSeedScreen() {
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const { unlock } = useSession();
   const { setAddress } = useWallet();
+
+  // Enable screenshot protection
+  useEffect(() => {
+    enableScreenshotProtection();
+    return () => {
+      disableScreenshotProtection();
+    };
+  }, []);
 
   // Shuffle words for confirmation
   const words = originalSeed.split(' ');
